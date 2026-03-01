@@ -5,4 +5,6 @@
 library(sf)
 library(dplyr)
 
-# exemple a pujar
+# llegir un shape
+
+riu <- st_read("data/raw/RIUS/PROVA/prova.shp")
