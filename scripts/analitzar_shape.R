@@ -2,8 +2,14 @@
 # install.packages("dplyr")
 # install.packages("readr")
 
+install.packages(c("sf", "terra", "tmap", "ggplot2", "dplyr", "readr"))
+
 library(sf)
+library(terra)
+library(tmap)
+library(ggplot2)
 library(dplyr)
+library(readr)
 
 # llegir un shape
 
