@@ -43,36 +43,12 @@ bcn <- municipis %>%
   filter(NOM == "Barcelona")
 
 
-# Creo Vectors DSITÀNCIA M
-# Creo Vector DISTÀNCIA KM
-
-dist_m <- c()
-dist_km <- c()
-for (i in 1:length(municipis$NOM)){
-  d_km <- round(st_distance(bcn, municipis[i,])/1000,2)
-  d_m <- round(st_distance(bcn, municipis[i,]),1)
-  
-  dist_m <- c(dist_m,d_m)
-  dist_km <- c(dist_km, d_km)
-}
-
-dist_m
-dist_km 
-
-
-# Un cop creat dels de de ADJUNTAR D'ALGUNA FORMA a MUNICIPIS
-# Com a COLUMNA M i COLUMNA KM
-
-
-
 municipis %>%         # Aqui creo columna DIST_BCN_M
   mutate(             # Aquesta columna és la DIST de BCN al MUNICIPI 22
     Dist_BCN_m =
-      round(st_distance(bcn, municipis[22,])/1000)
-      
-      )  
-
-# No se com AUTOMATIZAR el omplir columenes fent lso de ST_DISTANCE
-
-
+      round(st_distance(geometry, bcn),1),
+    Dist_BCN_Km =
+      round(Dist_BCN_m/1000,2)
+    
+  ) 
 
