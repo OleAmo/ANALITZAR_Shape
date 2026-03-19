@@ -11,3 +11,4 @@ library(readr)
 # llegir un shape
 
 riu <- st_read("data/raw/RIUS/PROVA/prova.shp")
+urbanisme <- st_read("data/raw/TERRITORI/URBANISME_Cat_prova.shp")
