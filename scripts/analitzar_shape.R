@@ -43,15 +43,37 @@ plot(bcn)
 bcn <- municipis %>%
   filter(NOM == "Barcelona")
 
+alella <- municipis %>%
+  filter(NOM == "Alella")
+
+martorelles <- municipis %>%
+  filter(NOM == "Martorelles")
 
 municipis_dist <- municipis %>%         # Aqui creo columna DIST_BCN_M
         mutate(                         # Aquesta columna és la DIST de BCN al MUNICIPI 22
           Dist_BCN_m =
-            round(st_distance(
-              st_centroid(geometry), 
-              st_centroid(bcn)),1),
+            round(
+              st_distance(st_centroid(geometry),st_centroid(bcn))
+              ,1),
           Dist_BCN_Km =
             round(Dist_BCN_m/1000,2)
     
   ) 
+
+
+# Ara ho represento gràficament
+
+centroides <- st_centroid(municipis_dist)
+
+
+ggplot() +
+  geom_sf(data = alella, fill = "lightyellow", color = "black") +
+  geom_sf(data = martorelles, fill = "lightblue", color = "blue") +
+  geom_sf(data = bcn, fill = "red", color = "darkred")
+
+ggplot() +
+  geom_sf(data = municipis, fill = "lightyellow", color = "black") +
+  geom_sf(data = centroides, fill = "red", color ="red")
+
+
 
