@@ -1,8 +1,5 @@
-# install.packages("sf")
-# install.packages("dplyr")
-# install.packages("readr")
 
-install.packages(c("sf", "terra", "tmap", "ggplot2", "dplyr", "readr"))
+# install.packages(c("sf", "terra", "tmap", "ggplot2", "dplyr", "readr"))
 
 library(sf)
 library(terra)
