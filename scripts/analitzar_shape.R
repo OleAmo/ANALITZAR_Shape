@@ -76,4 +76,14 @@ ggplot() +
   geom_sf(data = centroides, fill = "red", color ="red")
 
 
+# Ara poso etiquetes
+
+etiquetes_ale <- st_point_on_surface(alella)
+etiquetes_mart <- st_point_on_surface(martorelles)
+
+ggplot() +
+  geom_sf(data = alella, fill = "lightyellow", color = "black") +
+  geom_sf(data = martorelles, fill = "red", color ="red")+
+  geom_sf_text(data = etiquetes_ale, aes(label = NOM), size = 3) +
+  geom_sf_text(data = etiquetes_mart, aes(label = NOM), size = 3)
 
