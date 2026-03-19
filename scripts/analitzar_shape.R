@@ -38,17 +38,20 @@ plot(bcn)
 # Creeo dues columens NOVES al DATAFRAME de MUNICIPIS 
 # Serà la distància a BCN en metres i Km
 # Dist_BCN_m i Dist_BCN_Km
+# La distància la calculo des de els centroides
 
 bcn <- municipis %>%
   filter(NOM == "Barcelona")
 
 
-municipis %>%         # Aqui creo columna DIST_BCN_M
-  mutate(             # Aquesta columna és la DIST de BCN al MUNICIPI 22
-    Dist_BCN_m =
-      round(st_distance(geometry, bcn),1),
-    Dist_BCN_Km =
-      round(Dist_BCN_m/1000,2)
+municipis_dist <- municipis %>%         # Aqui creo columna DIST_BCN_M
+        mutate(                         # Aquesta columna és la DIST de BCN al MUNICIPI 22
+          Dist_BCN_m =
+            round(st_distance(
+              st_centroid(geometry), 
+              st_centroid(bcn)),1),
+          Dist_BCN_Km =
+            round(Dist_BCN_m/1000,2)
     
   ) 
 
