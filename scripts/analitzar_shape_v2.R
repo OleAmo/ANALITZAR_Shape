@@ -14,31 +14,66 @@ riu <- st_read("data/raw/RIUS/PROVA/prova.shp")
 urbanisme <- st_read("data/raw/TERRITORI/URBANISME_Cat_prova.shp")
 
 
+
 # EXERCICI 1:
+# APRENDRE A MODIFICAR UNA SOLA FILA
 
-# Vull saber de cada MUNICIPI
-# Quins sons els 5 MUNICIPIS MÉS APROP
-# La distància la calculo des de els centroides
-
-
+# Per cada FILA calculare l'àrea del POLIGON
+# Calculo l'Àrea de cada polígon
 
 municipis <- urbanisme %>% select(CODIMUNI, NOM)
 
+municipis_area <- municipis %>%   # Aqui creo columna Area_Ha
+  mutate(                         
+    Area_Ha =round((st_area(geometry)/10000),2)
+  )
 
+# Després faré un FOR
+# Si és més gran que 1/4 de l'area de BCN = diré = MÉS GRAN sino MÉS PETITA
 
-# MODIFICAR UNA SOLA FILA
-# Es fa així
-# He de implementar un for i recorreho tot
+Alella <- municipis %>%
+  filter(NOM == 'Alella')
 
-municipis_dist <- municipis[4,1] %>%         # Aqui creo columna DIST_BCN_M
-        mutate(                         # Aquesta columna és la DIST de BCN al MUNICIPI 22
-          Dist_BCN_m =
-            round(
-              st_distance(st_centroid(geometry[1]),st_centroid(bcn))
-              ,1),
-          Dist_BCN_Km =
-            round(Dist_BCN_m/1000,2)
+Alella_area <- round(st_area(Alella)/10000,2)
+
+municipis_area[33,]
+
+for (i in 1:length(municipis$geometry)){
+  area <- municipis_area$Area_Ha[i]
+  
+  if (area < Alella_area){
+    municipis_area[i,] <- municipis_area[i,] %>%   # Aqui creo columna COMPARACIÓ
+      mutate(                         
+        comparació = 'mes petita'
+      )
+  } else {
     
-  ) 
+    municipis_area[i,] <- municipis_area[i,] %>%   # Aqui creo columna COMPARACIÓ
+      mutate(                         
+        comparació = 'mes gran'
+      )
+    
+  }
+ 
+}
+
+
+
+# --------- ERROOOOOOOOOOOOR ----
+# -------------------------------
+
+# SHA DE FER:
+
+municipis_area <- municipis_area %>%
+  mutate(
+    comparació = ifelse(Area_Ha < Alella_area, "mes petita", "mes gran")
+  )
+
+# --------------------------
+
+
+View(municipis_area)
+
+
 
  
