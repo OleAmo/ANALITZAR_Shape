@@ -105,7 +105,12 @@ ggplot() +
 #         -) Més robust
 #         -) QGIS el llegeix perfecte
 
-st_write(municipis_dist, "data/processed/URBANISME_Cat_prova_processed.shp")
-st_write(municipis, "data/processed/URBANISME_Cat_prova_processed.gpkg")
+#   Per SOBREESCRIURE
+#   Es fa amb DELETE_LAYER = TRUE
 
+st_write(municipis_dist, "data/processed/URBANISME_Cat_prova_processed.shp")
+st_write(municipis_dist, "data/processed/URBANISME_Cat_prova_processed.shp", delete_layer = TRUE)
+
+st_write(municipis_dist, "data/processed/URBANISME_Cat_prova_processed.gpkg")
+st_write(municipis_dist, "data/processed/URBANISME_Cat_prova_processed.gpkg", delete_layer = TRUE)
 
