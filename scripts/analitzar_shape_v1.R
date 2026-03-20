@@ -90,7 +90,9 @@ ggplot() +
 
 
 
-# EXPORTAR A SHAPE
+# --- EXPORTAR A SHAPE
+# --------------------
+
 # Es pot fer de dos formes
 
 #   -) SHAPE:
