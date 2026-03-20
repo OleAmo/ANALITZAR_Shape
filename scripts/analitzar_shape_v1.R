@@ -60,8 +60,9 @@ municipis_dist <- municipis %>%         # Aqui creo columna DIST_BCN_M
     
   ) 
 
-
-# Ara ho represento gràficament
+# ----------------------------------------------
+# ----------- REPRESENTACIÓ GRÀFICA ------------
+# ----------------------------------------------
 
 centroides <- st_centroid(municipis_dist)
 
@@ -86,4 +87,23 @@ ggplot() +
   geom_sf(data = martorelles, fill = "red", color ="red")+
   geom_sf_text(data = etiquetes_ale, aes(label = NOM), size = 3) +
   geom_sf_text(data = etiquetes_mart, aes(label = NOM), size = 3)
+
+
+
+# EXPORTAR A SHAPE
+# Es pot fer de dos formes
+
+#   -) SHAPE:
+#         -) PROBLEMA = noms de camps ≤ 10 caràcters
+#         -) sense accents ni espais
+
+#   -) GEOPACKAGE
+#         -) Un sol fitxer
+#         -) Sense límit de noms
+#         -) Més robust
+#         -) QGIS el llegeix perfecte
+
+st_write(municipis_dist, "data/processed/URBANISME_Cat_prova_processed.shp")
+st_write(municipis, "data/processed/URBANISME_Cat_prova_processed.gpkg")
+
 
