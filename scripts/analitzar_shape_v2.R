@@ -15,10 +15,17 @@ urbanisme <- st_read("data/raw/TERRITORI/URBANISME_Cat_prova.shp")
 
 
 
-#    EXERCICI 1: " MODIFICAR FILES "
-#    --------------------------------
+#    --------------------------------------
+#    --------------------------------------
+#         OBJECTIU: " MODIFICAR FILES "
+#    --------------------------------------
+#    --------------------------------------
 
-#    CREAR COLUMNA = ÀREA POLÍGON
+
+#    CREAR COLUMNA
+#    -------------
+
+#    VUll crear ÀREA POLÍGON
 #    Faig DUES COLUMNES - Area_m2 i Area_Ha
 
 municipis <- urbanisme %>% select(CODIMUNI, NOM)
@@ -31,6 +38,9 @@ municipis_area <- municipis %>%   # Aqui creo columna Area_Ha
   )
 
 
+
+#    CONDICIONAL
+#    -------------
 
 #    Crear columnes amb CONDICIONAL
 #    Usaré el ELSEIF
@@ -65,6 +75,34 @@ ggplot() +
 
 
 
+#    --------------------------------------
+#    --------------------------------------
+#         OBJECTIU: " ESTADÍSTICA "
+#    --------------------------------------
+#    --------------------------------------
 
 
- 
+municipis_grans
+municipis_petits
+
+
+#    RESUM GENERAL
+#    mínim / màxim / mitjana / mediana / quartils
+
+summary(municipis_grans$Area_Ha)
+summary(municipis_petits$Area_Ha)
+
+
+#   Estadísitica CONCRETA
+
+mean(municipis_grans$Area_Ha)
+mean(municipis_petits$Area_Ha)
+
+median(municipis_grans$Area_Ha)
+median(municipis_petits$Area_Ha)
+
+min(municipis_grans$Area_Ha)
+max(municipis_grans$Area_Ha)
+
+min(municipis_petits$Area_Ha)
+max(municipis_petits$Area_Ha)
