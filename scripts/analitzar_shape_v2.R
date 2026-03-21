@@ -15,64 +15,55 @@ urbanisme <- st_read("data/raw/TERRITORI/URBANISME_Cat_prova.shp")
 
 
 
-# EXERCICI 1:
-# APRENDRE A MODIFICAR UNA SOLA FILA
+#    EXERCICI 1: " MODIFICAR FILES "
+#    --------------------------------
 
-# Per cada FILA calculare l'àrea del POLIGON
-# Calculo l'Àrea de cada polígon
+#    CREAR COLUMNA = ÀREA POLÍGON
+#    Faig DUES COLUMNES - Area_m2 i Area_Ha
 
 municipis <- urbanisme %>% select(CODIMUNI, NOM)
 
+
 municipis_area <- municipis %>%   # Aqui creo columna Area_Ha
   mutate(                         
+    Area_m2 =round(st_area(geometry),2),
     Area_Ha =round((st_area(geometry)/10000),2)
   )
 
-# Després faré un FOR
-# Si és més gran que 1/4 de l'area de BCN = diré = MÉS GRAN sino MÉS PETITA
 
-Alella <- municipis %>%
+
+#    Crear columnes amb CONDICIONAL
+#    Usaré el ELSEIF
+#    NECESSITA MUTATE si uso el %>%
+
+#    Crear COLUMNA CONDICIO_ALELLA
+#    Si és més gran = GRAN
+#    Si és més petita = PETITA
+
+Alella <- municipis_area %>%
   filter(NOM == 'Alella')
 
-Alella_area <- round(st_area(Alella)/10000,2)
 
-municipis_area[33,]
-
-for (i in 1:length(municipis$geometry)){
-  area <- municipis_area$Area_Ha[i]
-  
-  if (area < Alella_area){
-    municipis_area[i,] <- municipis_area[i,] %>%   # Aqui creo columna COMPARACIÓ
-      mutate(                         
-        comparació = 'mes petita'
-      )
-  } else {
-    
-    municipis_area[i,] <- municipis_area[i,] %>%   # Aqui creo columna COMPARACIÓ
-      mutate(                         
-        comparació = 'mes gran'
-      )
-    
-  }
- 
-}
-
-
-
-# --------- ERROOOOOOOOOOOOR ----
-# -------------------------------
-
-# SHA DE FER:
-
-municipis_area <- municipis_area %>%
+municipis_area <-municipis_area %>%
   mutate(
-    comparació = ifelse(Area_Ha < Alella_area, "mes petita", "mes gran")
+    condicio_alella = ifelse(Area_Ha < Alella$Area_Ha, 'Petita','Gran')
   )
+  
+# Puc FILTAR els mes PETITS 
+# Després els visualtizo
 
-# --------------------------
+municipis_petits <- municipis_area %>%
+  filter(condicio_alella == 'Petita')
+
+municipis_grans <- municipis_area %>%
+  filter(condicio_alella == 'Gran')
 
 
-View(municipis_area)
+ggplot() +
+  geom_sf(data = municipis_grans, fill = "lightyellow", color = "black") +
+  geom_sf(data = municipis_petits, fill = "red", color ="red")
+
+
 
 
 
