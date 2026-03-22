@@ -29,26 +29,16 @@ comarques <- st_read("data/raw/TERRITORI/comarques_prova.shp")
 #    VUll crear ÀREA POLÍGON
 #    Faig DUES COLUMNES - Area_m2 i Area_Ha
 
-municipis <- urbanisme %>% select(CODIMUNI, NOM)
+intersection <- st_intersection(rius_cat, comarques)
 
 
-municipis_area <- municipis %>%   # Aqui creo columna Area_Ha
-  mutate(                         
-    Area_m2 =round(st_area(geometry),2),
-    Area_Ha =round((st_area(geometry)/10000),2)
-  )
+#    ARA HE D'ANALITZAR la intersecció
+#    He de mirar quine columnes tinc i que signigiquen
+
+names(intersection)
+
+#   Aquestes son les columnes
 
 
 
-#    CONDICIONAL
-#    -------------
 
-#    Crear columnes amb CONDICIONAL
-#    Usaré el ELSEIF
-#    NECESSITA MUTATE si uso el %>%
-
-#    Crear COLUMNA CONDICIO_ALELLA
-#    Si és més gran = GRAN
-#    Si és més petita = PETITA
-
-A
