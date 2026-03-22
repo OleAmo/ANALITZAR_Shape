@@ -49,8 +49,17 @@ intersection %>%
     mitjana_longitud = mean(longitud)
   )
 
+
+# Crec que així conto el num de vegades que apareix cada comarca
+# En principi això és el numero de rius que intersecten amb cada comarca
+
+# -------------------------
+# Ho de comprovar
+# -------------------------
+
+
 intersection %>%
-  order_by(OBJECTID)
+  count(NOMCOMAR)
   
 
 
