@@ -49,6 +49,11 @@ intersection %>%
     mitjana_longitud = mean(longitud)
   )
 
+intersection %>%
+  order_by(OBJECTID)
+  
+
+
 
 
 
