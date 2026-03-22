@@ -26,8 +26,8 @@ comarques <- st_read("data/raw/TERRITORI/comarques_prova.shp")
 #    FER SUMARIZE amb lo INTERSECTAT
 #    -------------------------------
 
-#    VUll crear ÀREA POLÍGON
-#    Faig DUES COLUMNES - Area_m2 i Area_Ha
+#    VUll crear INTERSECCIÓ
+#    RIUS amb COMARQUES
 
 intersection <- st_intersection(rius_cat, comarques)
 
@@ -37,7 +37,17 @@ intersection <- st_intersection(rius_cat, comarques)
 
 names(intersection)
 
-#   Aquestes son les columnes
+#   Ara faig SUMARIZE
+#   AGRUPO per COMARQUE
+#   Sumo les longituds que intersecten amb cada comarca
+
+
+intersection %>%
+  group_by(NOMCOMAR) %>%
+  summarise(
+    suma_longitud = sum(longitud),
+    mitjana_longitud = mean(longitud)
+  )
 
 
 
