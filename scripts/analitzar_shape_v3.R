@@ -10,8 +10,8 @@ library(readr)
 
 # llegir un shape
 
-riu <- st_read("data/raw/xxxxxx.shp")
-comarques <- st_read("data/raw/xxxxxxx.shp")
+rius_cat <- st_read("data/raw/RIUS/PROVA/catalunya_prova.shp")
+comarques <- st_read("data/raw/TERRITORI/comarques_prova.shp")
 
 
 
