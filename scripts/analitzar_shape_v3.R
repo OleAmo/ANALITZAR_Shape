@@ -79,7 +79,27 @@ intersection_COMARAQUES
 intersection_RIUS
 
 
-  
+#   CALCULO %
+#      .-) % de LONGITUD de RIU x COMARCA
+#      .-) % de NUMERO de RIUS x COMARCA
 
+#      .-) NECESSITO 1r un DATA FRAME TOTAL
+#      .-) Es la SUMA TOTAL de LONGITUDS i NUMERO DE TRAMS
+
+#      .-) DESPRÉS amb MUTATES
+#      .-) CALCULO els %
+  
+intersection_suma <- intersection_COMARAQUES %>%
+  summarise(
+    total_long = sum(suma_longitud),
+    total_trams = sum(numero)
+  ) %>% data.frame()
+
+
+intersection_COMARAQUES %>%
+  mutate(
+    long_p = round((suma_longitud/as.integer(intersection_suma[1]))*100,2),
+    trams_p = round((numero/as.integer(intersection_suma[2]))*100,2),
+  )
 
 
