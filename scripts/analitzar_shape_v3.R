@@ -12,6 +12,7 @@ library(readr)
 
 rius_cat <- st_read("data/raw/RIUS/PROVA/catalunya_prova.shp")
 comarques <- st_read("data/raw/TERRITORI/comarques_prova.shp")
+urbanisme <- st_read("data/raw/TERRITORI/URBANISME_Cat_prova.shp")
 
 
 
@@ -100,6 +101,25 @@ intersection_COMARAQUES %>%
   mutate(
     long_p = round((suma_longitud/as.integer(intersection_suma[1]))*100,2),
     trams_p = round((numero/as.integer(intersection_suma[2]))*100,2),
-  )
+  ) 
 
 
+
+#  Ara FARE URBANITZACIONS
+#  CALCULO:
+#    -) Número de URBS x COMARCA
+
+
+
+urb_select <- urbanisme %>% 
+  select(NOM, NOMCOMAR) %>%
+  group_by(NOMCOMAR) %>%
+  summarise( num = n() ) %>% 
+  mutate ( 
+    area_m2 = st_area(geometry),
+    area_ha = round(area_m2/10000,2)) %>%
+  data.frame() %>%
+  select(-geometry)
+
+
+urb_select
