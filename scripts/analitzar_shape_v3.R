@@ -37,29 +37,48 @@ intersection <- st_intersection(rius_cat, comarques)
 
 names(intersection)
 
-#   Ara faig SUMARIZE
-#   AGRUPO per COMARQUE
-#   Sumo les longituds que intersecten amb cada comarca
 
+#   ---- SUMARIZE ----
+#   ------------------
 
-intersection %>%
+#   AGRUPO per COMARQUES
+#   CALCULO 
+#      .-) la MITJA de LONGITUDS
+#      .-) la SUMA de LONGITUDS x COMARCA
+#      .-) El NÚMERO de FILES x selecció =  n()
+
+#      .-) Ho transformo a DATAFRAME
+#      .-) Li TREC GEOMETRIA 
+
+intersection_COMARAQUES <- intersection %>%
   group_by(NOMCOMAR) %>%
   summarise(
-    suma_longitud = sum(longitud),
-    mitjana_longitud = mean(longitud)
-  )
+    suma_longitud = sum(longitud),      # SUMA
+    mitjana_longitud = mean(longitud),  # MITJA
+    numero = n()                        # NÚMERO de FILES x = COUNT() de SQL
+  ) %>% data.frame()%>%
+  select(-geometry)                     # Li TREC GEOMETRY
 
 
-# Crec que així conto el num de vegades que apareix cada comarca
-# En principi això és el numero de rius que intersecten amb cada comarca
+#   AGRUPO per RIUS
+#   CALCULO 
+#      .-) la MITJA de LONGITUDS
+#      .-) la SUMA de LONGITUDS x COMARCA
 
-# -------------------------
-# Ho de comprovar
-# -------------------------
+#      .-) Ho transformo a DATAFRAME
+#      .-) Li TREC GEOMETRIA
+
+intersection_RIUS <- intersection %>%
+  group_by(nom_final) %>%
+  summarise(
+    numero = n()
+  ) %>% data.frame()%>%
+  select(-geometry)
+
+intersection_COMARAQUES
+intersection_RIUS
 
 
-intersection %>%
-  count(NOMCOMAR)
   
 
 
