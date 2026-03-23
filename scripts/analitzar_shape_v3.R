@@ -104,22 +104,38 @@ intersection_COMARAQUES %>%
   ) 
 
 
-
-#  Ara FARE URBANITZACIONS
+#  URBANITZACIONS
 #  CALCULO:
 #    -) Número de URBS x COMARCA
-
-
+#    -) Area_m2
+#    -) Area_ha
 
 urb_select <- urbanisme %>% 
   select(NOM, NOMCOMAR) %>%
   group_by(NOMCOMAR) %>%
-  summarise( num = n() ) %>% 
+  summarise( num_muni = n() ) %>% 
   mutate ( 
     area_m2 = st_area(geometry),
     area_ha = round(area_m2/10000,2)) %>%
   data.frame() %>%
   select(-geometry)
 
+#  CALCULO:
+#    -) TOTAL= Número de URBS x COMARCA
+#    -) TOTAL= suma Area_m2
+#    -) TOTAL= suma Area_ha
 
-urb_select
+urb_select_sumes <- urb_select %>%
+  summarise( 
+    num_muni_total = sum(num_muni),
+    area_m2_total = sum(area_m2),
+    area_ha_total = sum(area_ha))
+
+urb_select_final <- urb_select %>%
+  mutate(
+    num_muni_p = round((num_muni/as.numeric(urb_select_sumes[1]))*100,2),
+    area_m2_p = round((area_m2/as.numeric(urb_select_sumes[2]))*100,2),
+    area_ha_p = round((area_ha/as.numeric(urb_select_sumes[3]))*100,2)
+  )
+
+urb_select_final
