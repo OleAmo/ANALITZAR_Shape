@@ -139,3 +139,5 @@ urb_select_final <- urb_select %>%
   )
 
 urb_select_final
+
+urb_select_final$area_m2_p
